@@ -1,0 +1,208 @@
+info:
+  description: Description from options
+  termsOfService: http://tos.myweb.com
+  title: Options title
+  version: 6.0.7-beta
+openapi: 3.0.0
+paths:
+  /:
+    get:
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+      summary: Ping
+      tags:
+      - default
+  /account/transactions:
+    get:
+      description: Fetch transactions for a single account.
+      parameters:
+      - description: number of transactions to display
+        example: '10'
+        in: query
+        name: limit
+        schema:
+          type: integer
+      - description: Search string to filter on transaction party
+        in: query
+        name: filter
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+      summary: Account transactions
+      tags:
+      - default
+  /account/{user_id}/summary:
+    get:
+      description: Fetch account summary for a single user.
+      parameters:
+      - in: path
+        name: user_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+      summary: Account summary
+      tags:
+      - default
+  /admin/credit:
+    post:
+      description: To be used by the bank tellers to cash checks, receive deposits,
+        savings account transactions among other things.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                transaction_amount: 100
+                transaction_party: nowhere
+                user_id: user-id
+              type: object
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+      summary: Credit amount
+      tags:
+      - default
+  /admin/debit:
+    post:
+      description: To be used by the bank tellers to cash checks, receive deposits,
+        savings account transactions among other things.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                transaction_amount: 100
+                transaction_party: somwhere
+                user_id: user-id
+              type: object
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+      summary: Debit amount
+      tags:
+      - default
+  /people/customers:
+    get:
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+      summary: Our customers
+      tags:
+      - default
+  /user:
+    get:
+      description: Authenticated users can fetch their user information.
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+      summary: Get User Information
+      tags:
+      - default
+    post:
+      description: Register a new user with The Good Bank. The username must be unique.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                password: kmmanoj96001pass
+                username: kmmanoj96001
+              type: object
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+      summary: Create User
+      tags:
+      - default
+    put:
+      description: Authenticated users can update their user information.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                email_id: kmmanoj96@gulbank.com
+                phone: +91 9876543210
+              type: object
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+      summary: Update User Information
+      tags:
+      - default
+  /user/change-password:
+    post:
+      description: This API is used to update the user password. The user must be
+        authenticated and must remember the current password to update.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                new_password: ''
+                old_password: ''
+                username: ''
+              type: object
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+      summary: User Change Password
+      tags:
+      - default
+  /user/login:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example:
+                password: kmmanoj96001pass
+                username: kmmanoj96001
+              type: object
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+      summary: User Login
+      tags:
+      - default
+  /user/logout:
+    get:
+      description: This API revokes an active user session.
+      responses:
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+      summary: User Logout
+      tags:
+      - default
+servers:
+- url: http://{{host}}

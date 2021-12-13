@@ -1,0 +1,5 @@
+node_modules/
+postman_collection.json
+output.yaml
+.DS_Store
+.idea/
