@@ -73,7 +73,7 @@ def enrich_spec(spec_file_path, prefix):
       spec['paths'] = new_paths
 
       base_name = os.path.basename(spec_file_path)
-      file_name = prefix + '_service.yaml' if prefix else ("enriched_" + base_name)
+      file_name = 'output_service.yaml' if prefix else ("enriched_" + base_name)
       with open(os.path.join(os.path.dirname(spec_file_path), file_name), 'w') as outfile:
         yaml.dump(spec, outfile, default_flow_style=False)
       print('{}/{} endpoints enriched.'.format(len(spec['paths']), initial_count))
@@ -174,7 +174,7 @@ def convert_path(spec, path):
     return parts, new_parts
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
+    if len(sys.argv) < 2:
         print('Usage: {} <postman collection file>'.format(sys.argv[0]))
         sys.exit(1)
 

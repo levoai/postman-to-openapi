@@ -3,3 +3,4 @@ postman_collection.json
 output.yaml
 .DS_Store
 .idea/
+.direnv
