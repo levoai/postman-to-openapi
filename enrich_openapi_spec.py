@@ -14,8 +14,8 @@ import re
 import sys
 import uuid
 import yaml
- 
- 
+from genson import SchemaBuilder
+
 def is_valid_uuid(value):
     try:
         uuid.UUID(value)
@@ -41,7 +41,8 @@ def add_path_param(spec, path, part, name, schema):
                 'required': True,
                 'schema': schema
               })
-      
+
+
 def enrich_spec(spec_file_path, prefix):
   """Main entry method.
   """   
@@ -71,6 +72,8 @@ def enrich_spec(spec_file_path, prefix):
         new_paths[new_path] = endpoint_spec
         
       spec['paths'] = new_paths
+      for path in spec['paths']:
+          add_schema_properties(spec, path)
 
       base_name = os.path.basename(spec_file_path)
       file_name = 'output_service.yaml' if prefix else ("enriched_" + base_name)
@@ -138,6 +141,23 @@ def fix_undefined_response_code(endpoint_spec):
         endpoint_spec[method]['responses']['200'] = endpoint_spec[method]['responses']['undefined']
         endpoint_spec[method]['responses']['200']['description'] = 'OK'
         del endpoint_spec[method]['responses']['undefined']
+
+
+def add_schema_properties(spec, path):
+    for name, method in spec['paths'][path].items():
+        if "requestBody" in method and "content" in method["requestBody"] and "application/json" in method["requestBody"]["content"] and "schema" in method["requestBody"]["content"]["application/json"]:
+            schema = method["requestBody"]["content"]["application/json"]["schema"]
+            if "example" in schema and "properties" not in schema:
+                example = schema["example"]
+                builder = SchemaBuilder()
+                builder.add_object(example)
+                output_schema = builder.to_schema()
+                if "properties" in output_schema:
+                    for prop_name, prop_type in list(output_schema["properties"].items()):
+                        # For a field with null value, genson infers its type as 'null' which is invalid in OpenApi spec
+                        if "type" not in prop_type or prop_type["type"] == 'null':
+                            del output_schema["properties"][prop_name]
+                    schema["properties"] = output_schema["properties"]
 
 
 def convert_path(spec, path):
