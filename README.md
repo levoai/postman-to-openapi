@@ -6,7 +6,7 @@ Postman collections are ubiquitous and invaluable for the functional testing of 
 
 However specialized API tests such as *API Contract Testing*, and *API Security Testing* require proper OpenAPI Specifications as inputs.
 
-This tools converts Postman collections to full featured OpenAPI v3 Specifications.
+This tools converts Postman collections to full featured OpenAPI v3 Specifications, that enable [`Codeless Contract Tests`](https://docs.levo.ai/test-your-app/test-app-schema-conformance), and [`Codeless API Security Tests`](https://docs.levo.ai/test-your-app/test-app-security/choices).
 
 ## Usage
 
