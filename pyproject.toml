@@ -1,0 +1,41 @@
+[tool.poetry]
+name = "levo-postman"
+version = "0.1.0"
+description = "Service to generate Postman collections from OAS and vice versa."
+authors = ["Buchi Reddy B <buchi@levo.ai>"]
+
+[tool.semantic_release]
+version_toml = "pyproject.toml:tool.poetry.version"
+branch = "main"
+upload_to_pypi = false
+upload_to_release = false
+build_command = false
+patch_without_tag = true
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.66.0"
+uvicorn = "^0.14.0"
+gunicorn = "^20.1.0"
+python-multipart = "^0.0.5"
+genson = "^1.2.2"
+PyYAML = "^5.4.1"
+aiofiles = "^22.1.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.4"
+setuptools = "^65.3.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -v --cov=src --cov=tests --cov-report xml:coverage.xml"
+testpaths = [
+    "tests",
+]
+
+[tool.black]
+target_version = ["py39"]
