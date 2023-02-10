@@ -4,3 +4,4 @@ output.yaml
 .DS_Store
 .idea/
 .direnv
+**/__pycache__
