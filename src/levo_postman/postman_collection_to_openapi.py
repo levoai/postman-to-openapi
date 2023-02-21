@@ -16,6 +16,7 @@
 
 # -*- coding: utf-8 -*-
 
+import asyncio
 import json
 import os
 import subprocess
@@ -104,4 +105,5 @@ if __name__ == '__main__':
         print('File {} does not exist'.format(sys.argv[1]))
         sys.exit(1)
 
-    convert_to_openapi(sys.argv[1], os.path.dirname(sys.argv[1]))
+    path = asyncio.run(convert_to_openapi(sys.argv[1], os.path.dirname(sys.argv[1])))
+    print('OpenApi spec file generated at {}'.format(path))

@@ -27,8 +27,6 @@ from levo_postman.enrich_openapi_spec import enrich_spec
 from levo_postman.oas_to_postman import convert_to_postman
 from levo_postman.postman_collection_to_openapi import convert_to_openapi
 
-CHUNK_SIZE = 1024 * 1024  # = 1MB
-
 router = APIRouter()
 
 
